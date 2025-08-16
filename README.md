@@ -41,7 +41,7 @@ Core goals:
 
 ## 📂 Repository Structure
 
-`
+```
 cloud-compliance-framework/
 ├── build/              # Build automation artifacts
 ├── config/             # Policy sets, templates, env configs
@@ -56,7 +56,7 @@ cloud-compliance-framework/
 ├── src/                # Core framework (policy engine, remediation, utils)
 ├── tests/              # Unit, integration & end-to-end tests
 └── requirements.txt    # Python dependencies
-`
+```
 ---
 
 ## 🏗️ Deployment Guide
