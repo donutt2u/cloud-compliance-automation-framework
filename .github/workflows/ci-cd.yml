@@ -31,7 +31,7 @@ jobs:
     - name: Lint and Format Check
       run: |
         make lint
-        make format -- --check # Use --check to fail on unformatted code
+        make format ARGS=--check
 
     - name: Security Scan
       run: make security-scan
