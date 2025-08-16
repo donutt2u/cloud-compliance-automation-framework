@@ -1,0 +1,13 @@
+id: aws-logging-detection-v1
+name: AWS Logging and Detection
+description: Ensure logging and monitoring are enabled.
+rules:
+  - condition: enforce_cloudtrail
+    action: deny
+    message: "CloudTrail must be enabled in all regions."
+  - condition: enforce_guardduty
+    action: warn
+    message: "GuardDuty should be enabled for threat detection."
+  - condition: enforce_securityhub
+    action: warn
+    message: "Security Hub should be enabled for compliance visibility."

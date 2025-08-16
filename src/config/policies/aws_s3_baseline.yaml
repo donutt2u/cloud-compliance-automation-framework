@@ -1,0 +1,13 @@
+id: aws-s3-baseline-v1
+name: AWS S3 Baseline
+description: Enforce secure configurations for S3 buckets.
+rules:
+  - condition: enforce_bucket_encryption
+    action: deny
+    message: "All S3 buckets must have default encryption enabled."
+  - condition: block_public_access
+    action: deny
+    message: "Public access to S3 buckets must be blocked."
+  - condition: enforce_access_logging
+    action: warn
+    message: "S3 buckets should have access logging enabled."

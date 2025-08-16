@@ -1,0 +1,24 @@
+id: "aws-s3-best-practices-v1"
+name: "AWS S3 Bucket Best Practices"
+description: "Ensures S3 buckets follow security best practices."
+rules:
+  - id: "s3-block-public-access"
+    description: "S3 buckets should block public access."
+    resource_type: "AWS::S3::Bucket"
+    attribute: "PublicAccessBlockConfiguration.BlockPublicAcls"
+    condition: "IS_TRUE"
+    value: true
+
+  - id: "s3-enable-versioning"
+    description: "S3 buckets should have versioning enabled."
+    resource_type: "AWS::S3::Bucket"
+    attribute: "VersioningConfiguration.Status"
+    condition: "EQUALS"
+    value: "Enabled"
+
+  - id: "s3-enable-encryption"
+    description: "S3 buckets should have server-side encryption enabled."
+    resource_type: "AWS::S3::Bucket"
+    attribute: "BucketEncryption.ServerSideEncryptionConfiguration.0.ServerSideEncryptionByDefault.SSEAlgorithm"
+    condition: "EQUALS"
+    value: "AES256"

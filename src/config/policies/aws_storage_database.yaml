@@ -1,0 +1,13 @@
+id: aws-storage-database-v1
+name: AWS Storage and Database Security
+description: Enforce encryption and restricted access for storage and database services.
+rules:
+  - condition: enforce_ebs_encryption
+    action: deny
+    message: "All EBS volumes must be encrypted with KMS."
+  - condition: enforce_rds_encryption
+    action: deny
+    message: "All RDS databases must use encryption at rest."
+  - condition: restrict_database_access
+    action: deny
+    message: "RDS and DynamoDB must not be exposed to the internet."

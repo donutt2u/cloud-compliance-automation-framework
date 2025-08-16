@@ -1,0 +1,12 @@
+{
+  "id": "my-non-compliant-public-bucket",
+  "type": "AWS::S3::Bucket",
+  "attributes": {
+    "PublicAccessBlockConfiguration": {
+      "BlockPublicAcls": false
+    },
+    "VersioningConfiguration": {
+      "Status": "Suspended"
+    }
+  }
+}

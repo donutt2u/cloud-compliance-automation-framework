@@ -1,0 +1,32 @@
+environment: local
+aws:
+  region: eu-west-2
+  profile: default
+  account_id: "275057777261"
+  
+resources:
+  lambda:
+    runtime: python3.11
+    timeout: 300
+    memory_size: 512
+    environment_variables:
+      LOG_LEVEL: INFO
+      ENVIRONMENT: local
+      
+  dynamodb:
+    billing_mode: PAY_PER_REQUEST
+    point_in_time_recovery: true
+    
+  s3:
+    versioning: true
+    encryption: true
+    public_access_block: true
+    
+logging:
+  level: INFO
+  format: json
+  
+monitoring:
+  enable_metrics: true
+  enable_tracing: true
+  retention_days: 30

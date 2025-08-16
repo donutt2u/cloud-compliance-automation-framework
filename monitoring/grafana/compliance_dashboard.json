@@ -1,0 +1,48 @@
+{
+  "__inputs": [],
+  "__requires": [],
+  "annotations": { "list": [] },
+  "editable": true,
+  "gnetId": null,
+  "graphTooltip": 0,
+  "id": null,
+  "links": [],
+  "panels": [
+    {
+      "type": "stat",
+      "title": "Overall Compliance",
+      "gridPos": { "h": 4, "w": 8, "x": 0, "y": 0 },
+      "datasource": "CloudWatch",
+      "options": { "reduceOptions": { "calcs": ["last"] }, "orientation": "auto" }
+    },
+    {
+      "type": "piechart",
+      "title": "Compliance Status",
+      "gridPos": { "h": 8, "w": 8, "x": 8, "y": 0 },
+      "datasource": "CloudWatch",
+      "options": {}
+    },
+    {
+      "type": "timeseries",
+      "title": "Non-Compliant Events Over Time",
+      "gridPos": { "h": 8, "w": 16, "x": 0, "y": 8 },
+      "datasource": "CloudWatch"
+    },
+    {
+      "type": "table",
+      "title": "Recent Non-Compliant Resources",
+      "gridPos": { "h": 8, "w": 24, "x": 0, "y": 16 },
+      "datasource": "DynamoDB"
+    }
+  ],
+  "schemaVersion": 35,
+  "style": "dark",
+  "tags": ["compliance"],
+  "templating": { "list": [] },
+  "time": { "from": "now-24h", "to": "now" },
+  "timepicker": {},
+  "timezone": "browser",
+  "title": "Cloud Compliance Dashboard",
+  "uid": "compliance-dashboard",
+  "version": 1
+}

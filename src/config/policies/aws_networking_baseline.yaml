@@ -1,0 +1,10 @@
+id: aws-networking-baseline-v1
+name: AWS Networking Baseline
+description: Enforce secure networking configurations for VPCs and subnets.
+rules:
+  - condition: no_public_subnets
+    action: deny
+    message: "Public subnets should not be allowed unless explicitly required."
+  - condition: restrict_internet_gateways
+    action: deny
+    message: "Internet gateways must be explicitly approved."

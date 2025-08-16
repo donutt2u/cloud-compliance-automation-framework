@@ -1,0 +1,13 @@
+id: aws-iam-baseline-v1
+name: AWS IAM Baseline
+description: Enforce least privilege and IAM security best practices.
+rules:
+  - condition: no_root_usage
+    action: deny
+    message: "Root account must not be used."
+  - condition: enforce_mfa
+    action: deny
+    message: "MFA must be enabled for all IAM users."
+  - condition: deny_wildcard_permissions
+    action: deny
+    message: "IAM policies must not allow * permissions."

@@ -1,0 +1,15 @@
+digraph G {
+    rankdir=TB;
+    node [shape=box, style=rounded, fontname="Arial", fontsize=11];
+
+    Master [label="master.sh\nOrchestrator", shape=box, style="filled,rounded", fillcolor=lightblue];
+
+    P1 [label="Phase 1\nSetup Environment"];
+    P2 [label="Phase 2\nSecurity Scan"];
+    P3 [label="Phase 3\nAudit & Compliance"];
+    P4 [label="Phase 4\nMonitoring Setup"];
+    P5 [label="Phase 5\nReporting & Hardening"];
+    Logs [label="Logs & Reports\nStored for review", shape=folder, fillcolor=lightgrey, style="filled,rounded"];
+
+    Master -> P1 -> P2 -> P3 -> P4 -> P5 -> Logs;
+}

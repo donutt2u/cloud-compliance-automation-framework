@@ -1,0 +1,10 @@
+id: aws-cloudwatch-logs-v1
+name: AWS CloudWatch Logs Baseline
+description: Ensure log retention and monitoring are enforced.
+rules:
+  - condition: enforce_log_retention
+    action: deny
+    message: "CloudWatch log groups must have retention policies."
+  - condition: disallow_unmonitored_logs
+    action: warn
+    message: "All critical services must stream logs to CloudWatch."

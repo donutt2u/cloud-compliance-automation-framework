@@ -1,0 +1,10 @@
+id: aws-kms-baseline-v1
+name: AWS KMS Baseline
+description: Enforce encryption standards and key rotation policies.
+rules:
+  - condition: enforce_cmk_rotation
+    action: deny
+    message: "All customer-managed KMS keys must have rotation enabled."
+  - condition: disallow_unencrypted_storage
+    action: deny
+    message: "All S3 buckets, EBS volumes, and RDS instances must use KMS encryption."
