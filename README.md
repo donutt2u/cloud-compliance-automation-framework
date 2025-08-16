@@ -86,14 +86,18 @@ Set required variables in your CI/CD secret store or runner environment:
 ### 4. Bootstrap orchestration (Phased execution)
 Phase 1 — Preparation (inventory & credentials)
     ./scripts/prepare_env.sh
+    
 Phase 2 — Deploy Infrastructure (IaC)
     cd infrastructure/terraform
     terraform init
     terraform apply -auto-approve
+    
 Phase 3 — Framework Installation & Services
     ./scripts/install_services.sh
+    
 Phase 4 — Initial Scan & Baseline Report
     python src/cli.py scan --all --output reports/initial_baseline.json
+    
 Phase 5 — Enable Continuous Monitoring
     ./scripts/enable_continuous_mode.sh
 
