@@ -41,7 +41,7 @@ Core goals:
 
 ## 📂 Repository Structure
 
-
+`
 cloud-compliance-framework/
 ├── build/              # Build automation artifacts
 ├── config/             # Policy sets, templates, env configs
@@ -56,7 +56,7 @@ cloud-compliance-framework/
 ├── src/                # Core framework (policy engine, remediation, utils)
 ├── tests/              # Unit, integration & end-to-end tests
 └── requirements.txt    # Python dependencies
-
+`
 ---
 
 ## 🏗️ Deployment Guide
@@ -66,14 +66,14 @@ cloud-compliance-framework/
 - Python **3.11+** (use virtualenv / venv)  
 - Non-root **IAM user** or service principal with scoped permissions for scanning & remediation. Never use cloud root accounts.  
 - **Terraform** (recommended >= 1.4) and **Ansible** (optional)  
-- **Docker** (optional) for containerized components  
-- Grafana & Prometheus (or managed equivalents) for monitoring and visualization  
+- **Docker** (optional) for containerised components  
+- Grafana & Prometheus (or managed equivalents) for monitoring and visualisation  
 - Vault / Secrets manager for credentials (AWS Secrets Manager, HashiCorp Vault, Azure Key Vault)
 
 ### 2. Environment variables & secrets (example)
 Set required variables in your CI/CD secret store or runner environment:
     export AWS_REGION="us-east-1"
-    export CCAF_ENV="production"
+    export CCAF_ENV=" production"
     export TF_VAR_admin_email="security@example.com"
     # Secrets should be injected at runtime from a secret manager; do not hardcode.
 
@@ -151,13 +151,13 @@ Phase 5 — Enable Continuous Monitoring
   - `ccaf_scan_total`, `ccaf_finding_count{severity}`, `ccaf_remediation_runs_total`
 - Grafana dashboards provide:
   - Posture overview, controls-by-status, remediation throughput, mean-time-to-remediated (MTTR)
-- Centralized logs should be shipped to SIEM for long-term retention and forensic workflows.
+- Centralised logs should be shipped to SIEM for long-term retention and forensic workflows.
 
 ---
 
 ## 🔁 Compliance Coverage & Mapping (high-level)
 - **NIST CSF** — Identify, Protect, Detect, Respond, Recover; mapping available in `docs/compliance-matrix.md`.  
-- **ISO/IEC 27001** — Annex A control mappings and evidence templates included.  
+- **ISO/IEC 27001** — Annexe A control mappings and evidence templates included.  
 - **CIS Benchmarks** — Modules for cloud provider CIS recommendations.  
 - **PCI-DSS v4.0** — Selected cardholder-data relevant controls for cloud deployments.  
 - **GDPR** — Data Protection by Design & Default (Articles 25, 32, 33) guidance included.
@@ -180,7 +180,7 @@ Copyright (c) 2025 Muhammad Arslan Akhtar
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
+in the Software without restriction, including, without limitation, the rights
 to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 copies of the Software, and to permit persons to whom the Software is
 furnished to do so, subject to the following conditions:
