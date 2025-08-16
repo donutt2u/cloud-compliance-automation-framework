@@ -56,6 +56,7 @@ cloud-compliance-framework/
 ├── src/                # Core framework (policy engine, remediation, utils)
 ├── tests/              # Unit, integration & end-to-end tests
 └── requirements.txt    # Python dependencies
+```bash
 
 ---
 
