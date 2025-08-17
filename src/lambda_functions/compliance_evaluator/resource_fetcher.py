@@ -1,11 +1,13 @@
 """
 Fetches detailed configuration for AWS resources.
 """
+
 import boto3
 from typing import Dict, Any, Optional
 from src.logger import get_logger
 
 logger = get_logger(__name__)
+
 
 def fetch_s3_bucket_details(bucket_name: str, region: str) -> Optional[Dict[str, Any]]:
     """
@@ -28,8 +30,12 @@ def fetch_s3_bucket_details(bucket_name: str, region: str) -> Optional[Dict[str,
         attributes = {
             "BucketName": bucket_name,
             "Region": region,
-            "PublicAccessBlockConfiguration": s3_client.get_public_access_block(Bucket=bucket_name).get("PublicAccessBlockConfiguration", {}),
-            "VersioningConfiguration": s3_client.get_bucket_versioning(Bucket=bucket_name),
+            "PublicAccessBlockConfiguration": s3_client.get_public_access_block(
+                Bucket=bucket_name
+            ).get("PublicAccessBlockConfiguration", {}),
+            "VersioningConfiguration": s3_client.get_bucket_versioning(
+                Bucket=bucket_name
+            ),
             "BucketEncryption": s3_client.get_bucket_encryption(Bucket=bucket_name),
         }
 
@@ -48,8 +54,11 @@ def fetch_s3_bucket_details(bucket_name: str, region: str) -> Optional[Dict[str,
         return attributes
     except Exception as e:
         # Catch other potential boto3 errors (e.g., credentials, throttling)
-        logger.error(f"Failed to fetch details for bucket '{bucket_name}': {e}", exc_info=True)
+        logger.error(
+            f"Failed to fetch details for bucket '{bucket_name}': {e}", exc_info=True
+        )
         return None
+
 
 def get_resource_details(event: Dict[str, Any]) -> Optional[Dict[str, Any]]:
     """
@@ -58,7 +67,7 @@ def get_resource_details(event: Dict[str, Any]) -> Optional[Dict[str, Any]]:
     """
     detail = event.get("detail", {})
     event_name = detail.get("eventName")
-    
+
     if event_name == "CreateBucket":
         bucket_name = detail.get("requestParameters", {}).get("bucketName")
         region = detail.get("awsRegion")

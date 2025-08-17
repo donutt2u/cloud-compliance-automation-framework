@@ -1,6 +1,7 @@
 """
 Maps failed rule IDs to remediation actions and triggers them.
 """
+
 from typing import Optional
 from aws_lambda_powertools import Logger
 from . import actions
@@ -15,7 +16,9 @@ REMEDIATION_MAP = {
 }
 
 
-def trigger_remediation(resource_id: str, resource_region: Optional[str], rule_id: str) -> bool:
+def trigger_remediation(
+    resource_id: str, resource_region: Optional[str], rule_id: str
+) -> bool:
     """
     Triggers the appropriate remediation action for a given failed rule.
 
@@ -37,6 +40,8 @@ def trigger_remediation(resource_id: str, resource_region: Optional[str], rule_i
         logger.error(f"Cannot perform remediation for {resource_id} without a region.")
         return False
 
-    logger.info(f"Triggering remediation '{remediation_action.__name__}' for resource '{resource_id}' due to failed rule '{rule_id}'")
-    
+    logger.info(
+        f"Triggering remediation '{remediation_action.__name__}' for resource '{resource_id}' due to failed rule '{rule_id}'"
+    )
+
     return remediation_action(resource_id, resource_region)

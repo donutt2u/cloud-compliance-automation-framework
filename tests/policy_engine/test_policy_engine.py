@@ -84,4 +84,3 @@ def test_non_compliant_resource_evaluation(policy_engine, non_compliant_s3_resou
 
 if __name__ == "__main__":
     pytest.main([__file__])
-

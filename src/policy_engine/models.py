@@ -5,9 +5,16 @@ from pydantic import BaseModel, Field
 
 # Define supported conditions for rules
 Condition = Literal[
-    "EQUALS", "NOT_EQUALS", "IN", "NOT_IN",
-    "CONTAINS", "NOT_CONTAINS", "IS_TRUE", "IS_FALSE",
-    "GREATER_THAN", "LESS_THAN"
+    "EQUALS",
+    "NOT_EQUALS",
+    "IN",
+    "NOT_IN",
+    "CONTAINS",
+    "NOT_CONTAINS",
+    "IS_TRUE",
+    "IS_FALSE",
+    "GREATER_THAN",
+    "LESS_THAN",
 ]
 
 # Define evaluation status
@@ -16,6 +23,7 @@ Status = Literal["COMPLIANT", "NON_COMPLIANT", "ERROR"]
 
 class Resource(BaseModel):
     """Represents a cloud resource to be evaluated."""
+
     id: str
     type: str
     attributes: Dict[str, Any]
@@ -23,6 +31,7 @@ class Resource(BaseModel):
 
 class Rule(BaseModel):
     """A single compliance rule within a policy."""
+
     id: str
     description: str
     resource_type: str
@@ -33,6 +42,7 @@ class Rule(BaseModel):
 
 class Policy(BaseModel):
     """A collection of compliance rules."""
+
     id: str
     name: str
     description: str
@@ -41,6 +51,7 @@ class Policy(BaseModel):
 
 class RuleResult(BaseModel):
     """The result of evaluating a single rule."""
+
     rule_id: str
     description: str
     status: Status
@@ -49,6 +60,7 @@ class RuleResult(BaseModel):
 
 class EvaluationResult(BaseModel):
     """The overall result of evaluating a resource against a policy."""
+
     policy_id: str
     resource_id: str
     status: Status

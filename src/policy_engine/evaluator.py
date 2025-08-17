@@ -3,6 +3,7 @@
 from typing import Any, Dict
 from .models import Rule, Status
 
+
 def evaluate_rule(rule: Rule, resource_attributes: Dict[str, Any]) -> bool:
     """
     Evaluates a single rule against a resource's attributes.
@@ -40,17 +41,18 @@ def evaluate_rule(rule: Rule, resource_attributes: Dict[str, Any]) -> bool:
 
     return eval_func(actual_value, expected_value)
 
+
 def getattr_nested(obj: Dict[str, Any], attr_string: str) -> Any:
     """
     Gets a nested attribute from a dictionary using a dot-separated string.
     Example: getattr_nested(data, 'a.b.c') is equivalent to data['a']['b']['c']
     """
-    attrs = attr_string.split('.')
+    attrs = attr_string.split(".")
     for attr in attrs:
         if isinstance(obj, dict):
             obj = obj.get(attr)
         else:
-            return None # Path is invalid
+            return None  # Path is invalid
         if obj is None:
-            return None # Attribute not found
+            return None  # Attribute not found
     return obj

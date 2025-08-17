@@ -2,6 +2,7 @@
 AWS Lambda function for real-time compliance evaluation.
 Stores results in Amazon DynamoDB and triggers remediation.
 """
+
 import os
 import json
 from pathlib import Path
@@ -37,12 +38,14 @@ POLICY_DIR = Path(__file__).parent.parent.parent / "config" / "policies"
 POLICIES = load_policies_from_directory(POLICY_DIR)
 ENGINE = PolicyEngine(POLICIES)
 
+
 # --- Helper Functions ---
 class DecimalEncoder(json.JSONEncoder):
     def default(self, o):
         if isinstance(o, Decimal):
             return float(o) if o % 1 > 0 else int(o)
         return super(DecimalEncoder, self).default(o)
+
 
 def store_result(result: EvaluationResult):
     """Stores a single evaluation result in DynamoDB."""
@@ -56,20 +59,27 @@ def store_result(result: EvaluationResult):
             "EvaluationTime": timestamp,
             "PolicyId": result.policy_id,
             "ComplianceStatus": result.status,
-            "RuleResults": [r.dict() for r in result.rule_results]
+            "RuleResults": [r.dict() for r in result.rule_results],
         }
         item_cleaned = json.loads(json.dumps(item_to_store), parse_float=Decimal)
         table.put_item(Item=item_cleaned)
-        logger.info("Successfully stored evaluation result in DynamoDB.", result=result.dict())
+        logger.info(
+            "Successfully stored evaluation result in DynamoDB.", result=result.dict()
+        )
     except Exception as e:
-        logger.exception("Failed to store result in DynamoDB.", resource_id=result.resource_id)
+        logger.exception(
+            "Failed to store result in DynamoDB.", resource_id=result.resource_id
+        )
+
 
 # --- Main Handler ---
 @tracer.capture_lambda_handler
 @logger.inject_lambda_context(log_event=True)
 def lambda_handler(event: Dict[str, Any], context: LambdaContext) -> Dict[str, Any]:
-    logger.info("Compliance evaluation triggered.", remediation_enabled=ENABLE_REMEDIATION)
-    
+    logger.info(
+        "Compliance evaluation triggered.", remediation_enabled=ENABLE_REMEDIATION
+    )
+
     resource_details = get_resource_details(event)
     if not resource_details:
         logger.warning("Could not extract resource details from event. Exiting.")
@@ -81,10 +91,10 @@ def lambda_handler(event: Dict[str, Any], context: LambdaContext) -> Dict[str, A
         attributes=resource_details,
     )
     resource_region = resource_details.get("Region")
-    
+
     logger.info(f"Evaluating resource: {resource.id}")
     results = ENGINE.evaluate(resource)
-    
+
     for result in results:
         store_result(result)
         if result.status == "NON_COMPLIANT":
@@ -92,8 +102,10 @@ def lambda_handler(event: Dict[str, Any], context: LambdaContext) -> Dict[str, A
             if ENABLE_REMEDIATION:
                 for rule_res in result.rule_results:
                     if rule_res.status == "NON_COMPLIANT":
-                        trigger_remediation(resource.id, resource_region, rule_res.rule_id)
+                        trigger_remediation(
+                            resource.id, resource_region, rule_res.rule_id
+                        )
             else:
                 logger.warning("Auto-remediation is disabled. No action will be taken.")
-    
+
     return {"statusCode": 200, "body": "Evaluation complete"}

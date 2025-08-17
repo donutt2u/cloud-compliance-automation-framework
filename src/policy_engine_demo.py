@@ -1,6 +1,7 @@
 """
 Demonstration of the Cloud Compliance Policy Engine.
 """
+
 import json
 from pathlib import Path
 from src.logger import setup_logging, get_logger
@@ -11,6 +12,7 @@ from src.policy_engine.models import Resource, EvaluationResult
 # Setup structured logging
 setup_logging("INFO")
 logger = get_logger("policy_demo")
+
 
 def print_result(result: EvaluationResult):
     """Prints evaluation results in a readable format."""

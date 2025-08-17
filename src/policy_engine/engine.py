@@ -45,19 +45,33 @@ class PolicyEngine:
             try:
                 compliant = evaluate_rule(rule, resource.attributes)
                 status: Status = "COMPLIANT" if compliant else "NON_COMPLIANT"
-                message = f"Attribute '{rule.attribute}' is compliant." if compliant else f"Violation: Attribute '{rule.attribute}' is non-compliant. Expected condition: {rule.condition} {rule.value}."
+                message = (
+                    f"Attribute '{rule.attribute}' is compliant."
+                    if compliant
+                    else f"Violation: Attribute '{rule.attribute}' is non-compliant. Expected condition: {rule.condition} {rule.value}."
+                )
 
                 if not compliant:
                     is_compliant = False
 
                 rule_results.append(
-                    RuleResult(rule_id=rule.id, description=rule.description, status=status, message=message)
+                    RuleResult(
+                        rule_id=rule.id,
+                        description=rule.description,
+                        status=status,
+                        message=message,
+                    )
                 )
             except Exception as e:
                 logger.error(f"Error evaluating rule {rule.id}: {e}")
                 is_compliant = False
                 rule_results.append(
-                    RuleResult(rule_id=rule.id, description=rule.description, status="ERROR", message=str(e))
+                    RuleResult(
+                        rule_id=rule.id,
+                        description=rule.description,
+                        status="ERROR",
+                        message=str(e),
+                    )
                 )
 
         overall_status: Status = "COMPLIANT" if is_compliant else "NON_COMPLIANT"
