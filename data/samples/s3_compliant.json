@@ -1,24 +1,11 @@
 {
-  "id": "my-compliant-secure-bucket",
-  "type": "AWS::S3::Bucket",
-  "attributes": {
-    "PublicAccessBlockConfiguration": {
-      "BlockPublicAcls": true,
-      "BlockPublicPolicy": true,
-      "IgnorePublicAcls": true,
-      "RestrictPublicBuckets": true
-    },
-    "VersioningConfiguration": {
-      "Status": "Enabled"
-    },
-    "BucketEncryption": {
-      "ServerSideEncryptionConfiguration": [
-        {
-          "ServerSideEncryptionByDefault": {
-            "SSEAlgorithm": "AES256"
-          }
-        }
-      ]
-    }
-  }
+  "name": "compliant-bucket",
+  "publicAccess": false,
+  "publicPolicy": false,
+  "ignorePublicAcls": false,
+  "restrictPublicBuckets": true,
+  "encryption": true,
+  "versioning": true,
+  "logging": true
 }
+
