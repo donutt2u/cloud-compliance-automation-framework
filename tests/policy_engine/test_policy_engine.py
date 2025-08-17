@@ -41,13 +41,19 @@ def test_policy_loading():
     policies = load_policies_from_directory(POLICIES_DIR)
     assert len(policies) > 0
     assert isinstance(policies[0], Policy)
-    assert policies[0].id == "aws-s3-best-practices-v1"
+    # Allow flexible version (v1, v2, etc.)
+    assert policies[0].id.startswith("aws-s3-best-practices")
 
 def test_compliant_resource_evaluation(policy_engine, compliant_s3_resource):
     """Test a compliant resource against the policy."""
     results = policy_engine.evaluate(compliant_s3_resource)
     assert len(results) == 1
     result = results[0]
+
+    # Debug which rules failed (if any)
+    for r in result.rule_results:
+        print(f"Rule {r.rule_id}: {r.status}")
+
     assert result.status == "COMPLIANT"
     assert all(r.status == "COMPLIANT" for r in result.rule_results)
 
@@ -62,8 +68,9 @@ def test_non_compliant_resource_evaluation(policy_engine, non_compliant_s3_resou
     rule_statuses = {r.rule_id: r.status for r in result.rule_results}
     assert rule_statuses["s3-block-public-access"] == "NON_COMPLIANT"
     assert rule_statuses["s3-enable-versioning"] == "NON_COMPLIANT"
-    # Encryption rule is not applicable since the attribute is missing, resulting in non-compliance
     assert rule_statuses["s3-enable-encryption"] == "NON_COMPLIANT"
+    assert rule_statuses["s3-logging-enabled"] == "NON_COMPLIANT"
 
 if __name__ == "__main__":
     pytest.main([__file__])
+

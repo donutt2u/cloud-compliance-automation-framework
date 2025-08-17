@@ -25,9 +25,9 @@ lint:
 	@echo "✅ Linting completed"
 
 format:
-	@echo "🎨 Formatting code..."
-	python -m black src tests || echo "Install black: pip install black"
-	@echo "✅ Code formatted"
+	@echo "🎨 Checking code formatting..."
+	black $(ARGS) src tests || echo "Install black: pip install black"
+	@echo "✅ Format check done"
 
 clean:
 	@echo "🧹 Cleaning build artifacts..."
@@ -56,4 +56,11 @@ security-scan:
 	bandit -r src/ -s B101
 	@echo "--- Running Safety (Dependency Check) ---"
 	safety check --full-report
+	
+	
+check:
+	flake8 src --max-line-length=88 --ignore=E203,W503
+	black --check src tests
+	pytest --maxfail=1 --disable-warnings -q
+
 

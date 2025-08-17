@@ -1,6 +1,6 @@
-id: "aws-s3-best-practices-v1"
+id: "aws-s3-best-practices-v2"
 name: "AWS S3 Bucket Best Practices"
-description: "Ensures S3 buckets follow security best practices."
+description: "Ensures S3 buckets follow security and compliance best practices."
 rules:
   - id: "s3-block-public-access"
     description: "S3 buckets should block public access."
@@ -9,6 +9,34 @@ rules:
     condition: "IS_TRUE"
     value: true
 
+  - id: "s3-block-public-policy"
+    description: "S3 buckets should block public bucket policies."
+    resource_type: "AWS::S3::Bucket"
+    attribute: "PublicAccessBlockConfiguration.BlockPublicPolicy"
+    condition: "IS_TRUE"
+    value: true
+
+  - id: "s3-ignore-public-acls"
+    description: "S3 buckets should ignore public ACLs."
+    resource_type: "AWS::S3::Bucket"
+    attribute: "PublicAccessBlockConfiguration.IgnorePublicAcls"
+    condition: "IS_TRUE"
+    value: true
+
+  - id: "s3-restrict-public-buckets"
+    description: "S3 buckets should restrict public buckets."
+    resource_type: "AWS::S3::Bucket"
+    attribute: "PublicAccessBlockConfiguration.RestrictPublicBuckets"
+    condition: "IS_TRUE"
+    value: true
+
+  - id: "s3-enable-encryption"
+    description: "S3 buckets should have server-side encryption enabled."
+    resource_type: "AWS::S3::Bucket"
+    attribute: "BucketEncryption.ServerSideEncryptionConfiguration.0.ServerSideEncryptionByDefault.SSEAlgorithm"
+    condition: "IN"
+    value: ["AES256", "aws:kms"]
+
   - id: "s3-enable-versioning"
     description: "S3 buckets should have versioning enabled."
     resource_type: "AWS::S3::Bucket"
@@ -16,9 +44,10 @@ rules:
     condition: "EQUALS"
     value: "Enabled"
 
-  - id: "s3-enable-encryption"
-    description: "S3 buckets should have server-side encryption enabled."
+  - id: "s3-logging-enabled"
+    description: "S3 buckets should enable access logging."
     resource_type: "AWS::S3::Bucket"
-    attribute: "BucketEncryption.ServerSideEncryptionConfiguration.0.ServerSideEncryptionByDefault.SSEAlgorithm"
-    condition: "EQUALS"
-    value: "AES256"
+    attribute: "LoggingConfiguration.LoggingEnabled"
+    condition: "NOT_EQUALS"
+    value: null
+
