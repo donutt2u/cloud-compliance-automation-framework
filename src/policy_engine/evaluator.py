@@ -1,7 +1,8 @@
 """Core rule evaluation logic."""
 
-from typing import Any, Dict
-from .models import Rule, Status
+from typing import Any
+
+from .models import Dict, Rule
 
 
 def evaluate_rule(rule: Rule, resource_attributes: Dict[str, Any]) -> bool:

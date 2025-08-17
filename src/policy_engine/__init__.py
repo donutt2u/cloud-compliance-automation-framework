@@ -6,6 +6,6 @@ compliance policies against cloud resource configurations.
 """
 
 from .engine import PolicyEngine
-from .models import Policy, EvaluationResult
+from .models import EvaluationResult, Policy
 
 __all__ = ["PolicyEngine", "Policy", "EvaluationResult"]

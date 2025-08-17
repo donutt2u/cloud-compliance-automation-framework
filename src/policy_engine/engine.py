@@ -1,9 +1,11 @@
 """Main Policy Engine orchestrator."""
 
 from typing import List
-from .models import Policy, Resource, EvaluationResult, RuleResult, Status
-from .evaluator import evaluate_rule
+
 from src.logger import get_logger
+
+from .evaluator import evaluate_rule
+from .models import EvaluationResult, Policy, Resource, RuleResult, Status
 
 logger = get_logger(__name__)
 
@@ -44,12 +46,14 @@ class PolicyEngine:
 
             try:
                 compliant = evaluate_rule(rule, resource.attributes)
-                status: Status = "COMPLIANT" if compliant else "NON_COMPLIANT"
-                message = (
-                    f"Attribute '{rule.attribute}' is compliant."
-                    if compliant
-                    else f"Violation: Attribute '{rule.attribute}' is non-compliant. Expected condition: {rule.condition} {rule.value}."
-                )
+                status: Status = Status.COMPLIANT if compliant else Status.NON_COMPLIANT
+                if compliant:
+                    message = f"Attribute '{rule.attribute}' is compliant."
+                else:
+                    message = (
+                        f"Violation: Attribute '{rule.attribute}' is non-compliant. "
+                        f"Expected condition: {rule.condition} {rule.value}."
+                    )
 
                 if not compliant:
                     is_compliant = False
@@ -69,12 +73,14 @@ class PolicyEngine:
                     RuleResult(
                         rule_id=rule.id,
                         description=rule.description,
-                        status="ERROR",
+                        status=Status.ERROR,
                         message=str(e),
                     )
                 )
 
-        overall_status: Status = "COMPLIANT" if is_compliant else "NON_COMPLIANT"
+        overall_status: Status = (
+            Status.COMPLIANT if is_compliant else Status.NON_COMPLIANT
+        )
         return EvaluationResult(
             policy_id=policy.id,
             resource_id=resource.id,

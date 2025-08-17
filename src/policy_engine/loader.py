@@ -1,10 +1,13 @@
 """Loads and validates policy files."""
 
-import yaml
 from pathlib import Path
 from typing import List
-from .models import Policy
+
+import yaml
+
 from src.logger import get_logger
+
+from .models import Policy
 
 logger = get_logger(__name__)
 

@@ -2,8 +2,10 @@
 Fetches detailed configuration for AWS resources.
 """
 
+from typing import Any, Dict, Optional
+
 import boto3
-from typing import Dict, Any, Optional
+
 from src.logger import get_logger
 
 logger = get_logger(__name__)

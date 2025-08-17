@@ -1,7 +1,8 @@
 """Pydantic models for the Policy Engine."""
 
-from typing import List, Dict, Any, Literal
-from pydantic import BaseModel, Field
+from typing import Any, Dict, List, Literal
+
+from pydantic import BaseModel
 
 # Define supported conditions for rules
 Condition = Literal[

@@ -3,21 +3,22 @@ AWS Lambda function for real-time compliance evaluation.
 Stores results in Amazon DynamoDB and triggers remediation.
 """
 
-import os
 import json
-from pathlib import Path
-from typing import Dict, Any
+import os
 from datetime import datetime, timezone
-import boto3
 from decimal import Decimal
+from pathlib import Path
+from typing import Any, Dict
 
+import boto3
 from aws_lambda_powertools import Logger, Tracer
 from aws_lambda_powertools.utilities.typing import LambdaContext
 
-from src.policy_engine import PolicyEngine, EvaluationResult
+from src.policy_engine import EvaluationResult, PolicyEngine
 from src.policy_engine.loader import load_policies_from_directory
 from src.policy_engine.models import Resource
 from src.remediation_engine import trigger_remediation
+
 from .resource_fetcher import get_resource_details
 
 # --- Initialization ---
@@ -66,7 +67,7 @@ def store_result(result: EvaluationResult):
         logger.info(
             "Successfully stored evaluation result in DynamoDB.", result=result.dict()
         )
-    except Exception as e:
+    except Exception:
         logger.exception(
             "Failed to store result in DynamoDB.", resource_id=result.resource_id
         )

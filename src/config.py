@@ -1,11 +1,11 @@
 """Configuration management module."""
 
-import os
-import yaml
 from pathlib import Path
-from typing import Dict, Any, Optional
-from pydantic_settings import BaseSettings
+from typing import Any, Dict, Optional
+
+import yaml
 from pydantic import Field
+from pydantic_settings import BaseSettings
 
 
 class Settings(BaseSettings):

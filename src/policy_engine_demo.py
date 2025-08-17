@@ -4,10 +4,11 @@ Demonstration of the Cloud Compliance Policy Engine.
 
 import json
 from pathlib import Path
-from src.logger import setup_logging, get_logger
-from src.policy_engine.loader import load_policies_from_directory
+
+from src.logger import get_logger, setup_logging
 from src.policy_engine.engine import PolicyEngine
-from src.policy_engine.models import Resource, EvaluationResult
+from src.policy_engine.loader import load_policies_from_directory
+from src.policy_engine.models import EvaluationResult, Resource
 
 # Setup structured logging
 setup_logging("INFO")
