@@ -16,7 +16,6 @@ def evaluate_rule(rule: Rule, resource_attributes: Dict[str, Any]) -> bool:
     Returns:
         True if the resource is compliant with the rule, False otherwise.
     """
-    # Use getattr_nested to handle nested attributes like 'PublicAccessBlockConfiguration.BlockPublicAcls'
     actual_value = getattr_nested(resource_attributes, rule.attribute)
     expected_value = rule.value
 
